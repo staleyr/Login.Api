@@ -1,4 +1,5 @@
-﻿using AngularJSAuthentication.API.Providers;
+﻿using Login.API.Migrations;
+using Login.API.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
@@ -11,26 +12,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 
-[assembly: OwinStartup(typeof(AngularJSAuthentication.API.Startup))]
+[assembly: OwinStartup(typeof(Login.API.Startup))]
 
-namespace AngularJSAuthentication.API
+namespace Login.API
 {
     public class Startup
     {
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
-        public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
-        public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
+        public static GoogleOAuth2AuthenticationOptions GoogleAuthOptions { get; private set; }
+        public static FacebookAuthenticationOptions FacebookAuthOptions { get; private set; }
 
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
 
             ConfigureOAuth(app);
 
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AuthContext, AngularJSAuthentication.API.Migrations.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<AuthContext, Configuration>());
 
         }
 
@@ -40,7 +41,7 @@ namespace AngularJSAuthentication.API
             app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
 
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions() {
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions() {
             
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
@@ -50,26 +51,26 @@ namespace AngularJSAuthentication.API
             };
 
             // Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
 
             //Configure Google External Login
-            googleAuthOptions = new GoogleOAuth2AuthenticationOptions()
+            GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "xxxxxx",
                 ClientSecret = "xxxxxx",
                 Provider = new GoogleAuthProvider()
             };
-            app.UseGoogleAuthentication(googleAuthOptions);
+            app.UseGoogleAuthentication(GoogleAuthOptions);
 
             //Configure Facebook External Login
-            facebookAuthOptions = new FacebookAuthenticationOptions()
+            FacebookAuthOptions = new FacebookAuthenticationOptions()
             {
-                AppId = "xxxxxx",
-                AppSecret = "xxxxxx",
+                AppId = "1627409010845174",
+                AppSecret = "94b28ff5b9109af772e2dd80ba3e7136",
                 Provider = new FacebookAuthProvider()
             };
-            app.UseFacebookAuthentication(facebookAuthOptions);
+            app.UseFacebookAuthentication(FacebookAuthOptions);
 
         }
     }

@@ -1,5 +1,5 @@
-﻿using AngularJSAuthentication.API.Entities;
-using AngularJSAuthentication.API.Models;
+﻿using Login.API.Entities;
+using Login.API.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AngularJSAuthentication.API
+namespace Login.API
 {
 
     public class AuthRepository : IDisposable
@@ -27,7 +27,7 @@ namespace AngularJSAuthentication.API
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            IdentityUser user = new IdentityUser
+            var user = new IdentityUser
             {
                 UserName = userModel.UserName
             };
@@ -51,10 +51,24 @@ namespace AngularJSAuthentication.API
             return client;
         }
 
+        public IdentityUser FindUserByUsername(string userName)
+        {
+            var user =  _userManager.FindByName(userName);
+
+            return user;
+        }
+
+        public async Task<IdentityResult> UpdateProfile(IdentityUser user)
+        {
+            var result = await _userManager.UpdateAsync(user);
+
+            return result;
+        }
+
         public async Task<bool> AddRefreshToken(RefreshToken token)
         {
 
-           var existingToken = _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId).SingleOrDefault();
+           var existingToken = _ctx.RefreshTokens.SingleOrDefault(r => r.Subject == token.Subject && r.ClientId == token.ClientId);
 
            if (existingToken != null)
            {

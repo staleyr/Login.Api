@@ -1,10 +1,11 @@
-﻿using AngularJSAuthentication.API.Models;
-using AngularJSAuthentication.API.Results;
+﻿using Login.API.Models;
+using Login.API.Results;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
-namespace AngularJSAuthentication.API.Controllers
+namespace Login.API.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
@@ -43,16 +44,62 @@ namespace AngularJSAuthentication.API.Controllers
                 return BadRequest(ModelState);
             }
 
-             IdentityResult result = await _repo.RegisterUser(userModel);
+            try
+            {
+                IdentityResult result = await _repo.RegisterUser(userModel);
 
-             IHttpActionResult errorResult = GetErrorResult(result);
+                IHttpActionResult errorResult = GetErrorResult(result);
 
-             if (errorResult != null)
-             {
-                 return errorResult;
-             }
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
 
-             return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [Route("UpdateProfile")]
+        public async Task<IHttpActionResult> UpdateProfile(ProfileModel profileModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var user = _repo.FindUserByUsername(profileModel.Username);
+
+                if (user != null)
+                {
+                    user.Email = profileModel.Email;
+                    user.PhoneNumber = profileModel.Phone;
+
+                    var result = await _repo.UpdateProfile(user);
+
+                    IHttpActionResult errorResult = GetErrorResult(result);
+
+                    if (errorResult != null)
+                    {
+                        return errorResult;
+                    }
+
+                    return Ok();
+                }
+
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // GET api/Account/ExternalLogin
@@ -268,7 +315,7 @@ namespace AngularJSAuthentication.API.Controllers
                 return string.Format("Client_id '{0}' is not registered in the system.", clientId);
             }
 
-            if (!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase) && client.AllowedOrigin != "*")
             {
                 return string.Format("The given URL is not allowed by Client_id '{0}' configuration.", clientId);
             }
@@ -285,7 +332,7 @@ namespace AngularJSAuthentication.API.Controllers
 
             if (queryStrings == null) return null;
 
-            var match = queryStrings.FirstOrDefault(keyValue => string.Compare(keyValue.Key, key, true) == 0);
+            var match = queryStrings.FirstOrDefault(keyValue => String.Compare(keyValue.Key, key, StringComparison.OrdinalIgnoreCase) == 0);
 
             if (string.IsNullOrEmpty(match.Value)) return null;
 
@@ -302,7 +349,7 @@ namespace AngularJSAuthentication.API.Controllers
             {
                 //You can get it from here: https://developers.facebook.com/tools/accesstoken/
                 //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
-                var appToken = "xxxxxx";
+                const string appToken = "1627409010845174|h3Rz6306vdWdtRr2elzEVtwxZNQ";
                 verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
             }
             else if (provider == "Google")
@@ -331,7 +378,7 @@ namespace AngularJSAuthentication.API.Controllers
                     parsedToken.user_id = jObj["data"]["user_id"];
                     parsedToken.app_id = jObj["data"]["app_id"];
 
-                    if (!string.Equals(Startup.facebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+                    if (!string.Equals(Startup.FacebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
                     {
                         return null;
                     }
@@ -341,7 +388,7 @@ namespace AngularJSAuthentication.API.Controllers
                     parsedToken.user_id = jObj["user_id"];
                     parsedToken.app_id = jObj["audience"];
 
-                    if (!string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+                    if (!string.Equals(Startup.GoogleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
                     {
                         return null;
                     }
@@ -358,7 +405,7 @@ namespace AngularJSAuthentication.API.Controllers
 
             var tokenExpiration = TimeSpan.FromDays(1);
 
-            ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+            var identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
             identity.AddClaim(new Claim("role", "user"));
@@ -373,8 +420,12 @@ namespace AngularJSAuthentication.API.Controllers
 
             var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
 
-            JObject tokenResponse = new JObject(
+            var user = _repo.FindUserByUsername(userName);
+
+            var tokenResponse = new JObject(
                                         new JProperty("userName", userName),
+                                        new JProperty("email", user.Email),
+                                        new JProperty("phone", user.PhoneNumber),
                                         new JProperty("access_token", accessToken),
                                         new JProperty("token_type", "bearer"),
                                         new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),

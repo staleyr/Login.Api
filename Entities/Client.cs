@@ -1,11 +1,11 @@
-﻿using AngularJSAuthentication.API.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Login.API.Models;
 
-namespace AngularJSAuthentication.API.Entities
+namespace Login.API.Entities
 {
     public class Client
     {

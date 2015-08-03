@@ -1,4 +1,4 @@
-﻿using AngularJSAuthentication.API.Entities;
+﻿using Login.API.Entities;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AngularJSAuthentication.API.Providers
+namespace Login.API.Providers
 {
     public class SimpleRefreshTokenProvider : IAuthenticationTokenProvider
     {

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="depictApi" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\rstaley\\Documents\\GitHub\\Depict\.Site\\AngularJSAuthentication-master\\AngularJSAuthentication\.API\\obj\\Debug\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\rstaley\\Documents\\GitHub\\Depict\.Site\\AngularJSAuthentication-master\\AngularJSAuthentication\.API\\obj\\Debug\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="AuthContext-Web.config Connection String" description="" value="Data Source=n5d8dy7lh7.database.windows.net;Initial Catalog=LoginAuth;User ID=staleyr;Password=LiveStrong12*" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\rstaley\\Documents\\GitHub\\Depict\.Site\\AngularJSAuthentication-master\\AngularJSAuthentication\.API\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='AuthContext']/@connectionString" />
+  </parameter>
+</parameters>

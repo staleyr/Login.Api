@@ -1,4 +1,4 @@
-﻿using AngularJSAuthentication.API.Entities;
+﻿using Login.API.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AngularJSAuthentication.API.Providers
+namespace Login.API.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {

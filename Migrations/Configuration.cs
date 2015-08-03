@@ -1,22 +1,24 @@
-namespace AngularJSAuthentication.API.Migrations
+using Login.API.Entities;
+
+namespace Login.API.Migrations
 {
-    using AngularJSAuthentication.API.Entities;
+    using Login.API.Entities;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AngularJSAuthentication.API.AuthContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AuthContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(AngularJSAuthentication.API.AuthContext context)
+        protected override void Seed(AuthContext context)
         {
-            if (context.Clients.Count() > 0)
+            if (context.Clients.Any())
             {
                 return;
             }
@@ -25,19 +27,19 @@ namespace AngularJSAuthentication.API.Migrations
             context.SaveChanges();
         }
 
-        private static List<Client> BuildClientsList()
+        private static IEnumerable<Client> BuildClientsList()
         {
 
-            List<Client> ClientsList = new List<Client> 
+            var clientsList = new List<Client> 
             {
                 new Client
-                { Id = "ngAuthApp", 
+                { Id = "Depict", 
                     Secret= Helper.GetHash("abc@123"), 
-                    Name="AngularJS front-end Application", 
+                    Name="Photo voting application", 
                     ApplicationType =  Models.ApplicationTypes.JavaScript, 
                     Active = true, 
                     RefreshTokenLifeTime = 7200, 
-                    AllowedOrigin = "http://depictlogin.azurewebsites.net"
+                    AllowedOrigin = "*"
                 },
                 new Client
                 { Id = "consoleApp", 
@@ -50,7 +52,7 @@ namespace AngularJSAuthentication.API.Migrations
                 }
             };
 
-            return ClientsList;
+            return clientsList;
         }
     }
 }

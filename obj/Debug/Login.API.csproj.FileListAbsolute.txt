@@ -1,8 +1,4 @@
-C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\Login.API.csprojResolveAssemblyReference.cache
-C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\AngularJSAuthentication.API.Migrations.AddClientsAndRefreshTokenTables.resources
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\Login.API.csproj.GenerateResource.Cache
-C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\AngularJSAuthentication.API.dll
-C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\AngularJSAuthentication.API.pdb
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\EntityFramework.dll
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\EntityFramework.SqlServer.dll
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\Microsoft.AspNet.Identity.Core.dll
@@ -41,5 +37,9 @@ C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\Ang
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\System.Web.Http.xml
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\System.Web.Http.Owin.xml
 C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\System.Web.Http.WebHost.xml
-C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\AngularJSAuthentication.API.dll
-C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\AngularJSAuthentication.API.pdb
+C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\Login.API.Migrations.AddClientsAndRefreshTokenTables.resources
+C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\Login.API.dll
+C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\bin\Login.API.pdb
+C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\Login.API.dll
+C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\Login.API.pdb
+C:\Users\rstaley\Documents\GitHub\Depict.Site\AngularJSAuthentication-master\AngularJSAuthentication.API\obj\Debug\Login.API.csprojResolveAssemblyReference.cache

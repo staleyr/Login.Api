@@ -1,4 +1,4 @@
-namespace AngularJSAuthentication.API.Migrations
+namespace Login.API.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
